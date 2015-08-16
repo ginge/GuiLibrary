@@ -1,0 +1,21 @@
+{
+  "name": "GuiLibrary",
+  "keywords": "txt, gfx, gui, controls",
+  "description": "GUI Toolkit to allow drawing of buttons and other controls to the tft easily",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/ginge/GuiToolkit.git"
+  },
+  "include": [
+    "*.h",
+    "*.c",
+    "*.cpp",
+  ],
+  "frameworks": "arduino",
+  "platforms": [
+    "atmelavr",
+    "atmelsam",
+    "teensy"
+  ]
+}
