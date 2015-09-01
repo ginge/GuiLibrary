@@ -1,4 +1,4 @@
-====================================================================================
+/*====================================================================================
 Copyright (c) 2015 Barry Carter <barry.carter@gmail.com>
 
 
@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 A simple GUI Widget library for TFT screens. 
 ====================================================================================
+*/
 
 #if ARDUINO < 100
     #include <WProgram.h>

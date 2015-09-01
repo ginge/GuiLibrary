@@ -1,4 +1,4 @@
-====================================================================================
+/*====================================================================================
 Copyright (c) 2015 Barry Carter <barry.carter@gmail.com>
 
 
@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 A simple GUI Widget library for TFT screens. 
 ====================================================================================
+*/
 
 #ifndef _GUILIBRARY_H_
 #define _GUILIBRARY_H_
@@ -129,7 +130,7 @@ private:
 
 class GuiLabel : public GuiElement {
 public:
-    GuiLabel(void);
+    GuiLabel(void) : GuiElement(0, 0, 0, 0) { labelText = ""; };
     GuiLabel(int16_t x, int16_t y, int16_t width, int16_t height, char const* text): GuiElement(x, y, width, height) { labelText = text; };
 
     uint8_t textAlignH = TEXT_H_ALIGN_LEFT;
@@ -150,7 +151,7 @@ private:
 
 class GuiElementList : public GuiElement {
 public:
-    GuiElementList(void);
+    GuiElementList(void) : GuiElement(0, 0, 0, 0) {};
     GuiElementList(int16_t x, int16_t y, int16_t width, int16_t height) : GuiElement(x, y, width, height) {};
 
     void addChild(GuiElement* child);
@@ -169,7 +170,7 @@ private:
 
 class GuiButton : public GuiLabel {
 public:
-    GuiButton(void);
+    GuiButton(void) : GuiLabel(0, 0, 0, 0, "") { borderWidth = 1; textAlignH = TEXT_H_ALIGN_CENTRE; transparent(false); };
     GuiButton(int16_t x, int16_t y, int16_t width, int16_t height, char const* text) : GuiLabel(x, y, width, height, text) { borderWidth = 1; textAlignH = TEXT_H_ALIGN_CENTRE; transparent(false); };
 
     void draw(void);
@@ -188,7 +189,7 @@ private:
 
 class GuiCheckBox : public GuiLabel {
 public:
-    GuiCheckBox(void);
+    GuiCheckBox(void) : GuiLabel(0, 0, 0, 0, "") { borderWidth = 0; textAlignH = TEXT_H_ALIGN_LEFT; transparent(true); };
     GuiCheckBox(int16_t x, int16_t y, int16_t width, int16_t height, char const* text) : GuiLabel(x, y, width, height, text) { borderWidth = 0; textAlignH = TEXT_H_ALIGN_LEFT; transparent(true); };
 
     void draw(void);
