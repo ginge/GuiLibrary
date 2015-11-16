@@ -56,17 +56,22 @@ uint8_t callbackFunction_home(void *a, GuiElement *element, uint8_t event) {
     panelSettings->visible(false);
     panelMenu->visible(true);
   }
-  return 0;
+  return 1; // tell the gui engine we are going to be moving away and not to redraw
 }
 
 // This will be called when the button is pressed or released
 uint8_t callbackFunction_settings(void *a, GuiElement *element, uint8_t event) {
   if (event == GUI_EVENT_RELEASE) {
     Serial.println("Pressed Settings");
+    Serial.print("x "); Serial.print(element->absoluteX());
+    Serial.print(" y "); Serial.print(element->absoluteY());
+    Serial.print(" p "); Serial.print(element->padding);
+    Serial.print(" w "); Serial.print(element->width);
+    Serial.print(" h "); Serial.println(element->height);
     panelMenu->visible(false);
     panelSettings->visible(true);
   }
-  return 0;
+  return 1; // tell the gui engine we are going to be moving away and not to redraw
 }
 
 uint8_t callbackFunction_menu1(void *a, GuiElement *element, uint8_t event) {
