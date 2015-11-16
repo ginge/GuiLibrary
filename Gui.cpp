@@ -49,7 +49,7 @@ void Gui::setRotation(int16_t degrees) { // multiples of 90
     rotation = degrees;
 }
 
-void Gui::sendEventToWidget(int16_t x, int16_t y, int16_t eventid) {
+void Gui::sendEventToWidget(int16_t x, int16_t y, int8_t eventid) {
     // do collision detection
     GuiNode *tmphead = children.head();
 

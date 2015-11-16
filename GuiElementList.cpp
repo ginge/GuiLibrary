@@ -29,7 +29,6 @@ void GuiElementList::addChild(GuiElement *child) {
 GuiElement* GuiElementList::pointInWidget(int16_t x, int16_t y) {
     GuiElement* element = GuiUtils::pointInWidget(this, x, y);
     if (element != NULL) {
-        Serial.println("add child");
         selectedElement = element;
         return this;
     }

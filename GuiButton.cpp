@@ -34,7 +34,10 @@ uint8_t GuiButton::callbackProcess(processEvent_t processEventHandle, void* proc
     // we are going to cheat here and tell this widget it has no parent, set the flags, and then restore the parent
     // TODO maybe bring back those nodraw options to the setters
     if (ret > 0)
+    {
+        // force element to be un-pressed without a redraw
         parent = NULL;
+    }
     
     // do some drawing state stuff
     if (event == GUI_EVENT_PRESS) {

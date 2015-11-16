@@ -46,8 +46,6 @@ void GuiLabel::draw(bool andBase) {
         else {
             newx += extraXOffset;
         }
-        Serial.print("y");
-        Serial.println(newy);
 
         GuiUtils::drawText(this, labelText, foregroundColour, newx, newy, labelFontSize);
     }

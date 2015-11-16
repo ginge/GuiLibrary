@@ -53,25 +53,6 @@ void GuiUtils::drawText(GuiElement* element, char const* text, uint16_t colour, 
     _tft->println(text);
 }
 
-void GuiUtils::setBitValue(uint8_t* reg, uint8_t bit, uint8_t value) {
-    if (value)
-        setBit(reg, bit);
-    else
-        clearBit(reg, bit);
-}
-
-void GuiUtils::setBit(uint8_t* reg, uint8_t bit) {
-    *reg |= bit;
-}
-
-void GuiUtils::clearBit(uint8_t* reg, uint8_t bit) {
-    *reg &= ~(bit);
-}
-
-bool GuiUtils::checkBit(uint8_t* reg, uint8_t bit) {
-    return *reg & bit;
-}
-
 // convert from RGB to RGR565 that the GFX lib uses
 uint16_t GuiUtils::getColour(uint8_t red, uint8_t green, uint8_t blue) {
     return ((red / 8) << 11) | ((green / 4) << 5) | (blue / 8);

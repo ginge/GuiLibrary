@@ -21,7 +21,7 @@ A simple GUI Widget library for TFT screens.
 #include "TouchScreen.h"
 
 // sometimes we want to disable this
-#define USING_SD 1
+//#define USING_SD 1
 
 #if USING_SD
 #include <SdFat.h>
@@ -40,16 +40,16 @@ A simple GUI Widget library for TFT screens.
 #define DEBOUNCE_DELAY 50
 
 // Event types for button presse etc
-#define GUI_EVENT_PRESS   1
-#define GUI_EVENT_RELEASE 2
-#define GUI_EVENT_DRAG    4
+#define GUI_EVENT_PRESS   0
+#define GUI_EVENT_RELEASE 1
+#define GUI_EVENT_DRAG    2
 
 
 // settings flags to save memory
-#define ENABLED     1
-#define VISIBLE     2
-#define TRANSPARENT 4
-#define PRESSED     8
+#define ENABLED     0
+#define VISIBLE     1
+#define TRANSPARENT 2
+#define PRESSED     3
 
 #define ILI9341_GREY 0x7BEF
 
@@ -74,13 +74,13 @@ public:
     uint16_t backgroundColour = DEFAULT_COLOUR_BG;
     uint16_t foregroundColour = DEFAULT_COLOUR_FG;
     
-    bool enabled() { return settingsFlags & ENABLED; }
+    bool enabled() { return (settingsFlags >> ENABLED) & 1; }
     void enabled(bool isenabled);
     bool visible();
     void visible(bool isvisible);
-    bool pressed() { return settingsFlags & PRESSED; }
+    bool pressed() { return (settingsFlags >> PRESSED) & 1; }
     void pressed(bool ispressed);
-    bool transparent() { return settingsFlags & TRANSPARENT; }
+    bool transparent() { return (settingsFlags >> TRANSPARENT) & 1; }
     void transparent(bool istransparent);
     
     GuiList children;
@@ -119,7 +119,7 @@ private:
     processEvent_t processEventHandle = NULL;
     void* processEventPointer = NULL;
     
-    uint8_t settingsFlags = VISIBLE | ENABLED | TRANSPARENT;
+    uint8_t settingsFlags = (1 << VISIBLE) | (1 << ENABLED) | (1 << TRANSPARENT);
 };
 
 ///////////////////
@@ -222,7 +222,7 @@ public:
     TouchScreen* ts;
 
 private:
-    void sendEventToWidget(int16_t x, int16_t y, int16_t eventid);
+    void sendEventToWidget(int16_t x, int16_t y, int8_t eventid);
     int16_t rotation = 0;
 };
 
@@ -292,12 +292,6 @@ public:
     static void drawText(GuiElement* element, char const* text, uint16_t colour, int16_t x, int16_t y, uint8_t fontSize);
     
     static uint16_t getColour(uint8_t red, uint8_t green, uint8_t blue);
-    
-    // bitwise ops. TODO maybe a macro
-    static void setBitValue(uint8_t* reg, uint8_t bit, uint8_t value);
-    static void setBit(uint8_t* reg, uint8_t bit);
-    static void clearBit(uint8_t* reg, uint8_t bit);
-    static bool checkBit(uint8_t* reg, uint8_t bit);
     
     // find centre lines in an eleemnt
     static uint16_t getElementCentreX(GuiElement* element);

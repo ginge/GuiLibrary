@@ -41,9 +41,12 @@ GuiElement::GuiElement(int16_t posX, int16_t posY, int16_t w, int16_t h)
 
 // set enabled or not the for element. 
 void GuiElement::enabled(bool isenabled) {
-    if (GuiUtils::checkBit(&settingsFlags, ENABLED) == isenabled) return;
+    if (((settingsFlags >> ENABLED) & 1) == isenabled) return;
 
-    GuiUtils::setBitValue(&settingsFlags, ENABLED, isenabled);
+    if (isenabled)
+        settingsFlags |= 1 << ENABLED;
+    else
+        settingsFlags &= ~(1 << ENABLED);
     
     // we don't draw unparented widgets. They are usually just being built
     if (parent != NULL)
@@ -51,9 +54,12 @@ void GuiElement::enabled(bool isenabled) {
 }
 
 void GuiElement::transparent(bool istransparent) {
-    if (GuiUtils::checkBit(&settingsFlags, ENABLED) == istransparent) return;
+    if (((settingsFlags >> TRANSPARENT) & 1) == istransparent) return;
 
-    GuiUtils::setBitValue(&settingsFlags, TRANSPARENT, istransparent);
+    if (istransparent)
+        settingsFlags |= 1 << TRANSPARENT;
+    else
+        settingsFlags &= ~(1 << TRANSPARENT);
     
     // we don't draw unparented widgets. They are usually just being built
     if (parent != NULL)
@@ -62,7 +68,7 @@ void GuiElement::transparent(bool istransparent) {
 
 bool GuiElement::visible(void) {
     // if the parent isn't visible, we shouldn't be
-    if (settingsFlags & VISIBLE)
+    if ((settingsFlags >> VISIBLE) & 1)
     {
         if (parent != NULL && !parent->visible())
             return false;
@@ -73,9 +79,12 @@ bool GuiElement::visible(void) {
 
 // hide the element and stop any further processing
 void GuiElement::visible(bool isvisible) {
-    if (GuiUtils::checkBit(&settingsFlags, VISIBLE) == isvisible) return;
+    if (((settingsFlags >> VISIBLE) & 1) == isvisible) return;
 
-    GuiUtils::setBitValue(&settingsFlags, VISIBLE, isvisible);
+    if (isvisible)
+        settingsFlags |= 1 << VISIBLE;
+    else
+        settingsFlags &=  ~(1 << VISIBLE);
     
     // we have to clear the area the element was in now
     _tft->fillRect(absoluteX(), absoluteY(), width, height, backgroundColourFromParent());
@@ -86,9 +95,12 @@ void GuiElement::visible(bool isvisible) {
 }
 
 void GuiElement::pressed(bool ispressed) {
-    if (GuiUtils::checkBit(&settingsFlags, PRESSED) == ispressed) return;
-    
-    GuiUtils::setBitValue(&settingsFlags, PRESSED, ispressed);
+    if (((settingsFlags >> PRESSED) & 1) == ispressed) return;
+
+    if (ispressed)
+        settingsFlags |= 1 << PRESSED;
+    else
+        settingsFlags &= ~(1 << PRESSED);
     
     // we don't draw unparented widgets. They are usually just being built
     if (parent != NULL)
@@ -106,11 +118,12 @@ int16_t GuiElement::absoluteY() {
 
 // draw the base of the widget. teh background, 
 void GuiElement::drawBase(void) {
-    if (GuiUtils::checkBit(&settingsFlags, VISIBLE) == false) return;
+    if (((settingsFlags >> VISIBLE)  & 1) == false) return;
+    
     // if the parent isn't visible, we shouldn't be
     if (parent != NULL && !parent->enabled()) return;
     
-    bool isEnabled = GuiUtils::checkBit(&settingsFlags, ENABLED);
+    bool isEnabled = (settingsFlags >> ENABLED) & 1;
     
     if (!transparent() || !isEnabled) {
         _tft->fillRect(absoluteX(), absoluteY(), width, height, (isEnabled ? backgroundColour : ILI9341_LIGHTGREY));
@@ -172,12 +185,11 @@ void GuiElement::addChild(GuiElement *child) {
 
 GuiElement* GuiElement::pointInWidget(int16_t x, int16_t y) { 
     // if the parent isn't visible, we shouldn't be
-    if (parent != NULL && !parent->visible()) return NULL;
-    if (GuiUtils::checkBit(&settingsFlags, VISIBLE) == false) return NULL;
+    if ((parent != NULL && !parent->visible()) || !visible()) return NULL;
 
     if ((x > absoluteX() && x < absoluteX() + width) &&
         (y > absoluteY() && y < absoluteY() + height)) {
-                // we know the point is in this element somewhere, 
+        // we know the point is in this element somewhere, 
         // check all childrent to see if this event is for a child
         GuiElement* found = GuiUtils::pointInWidget(this, x, y);
         if (!found) {
