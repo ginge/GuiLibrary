@@ -21,8 +21,9 @@
 #include <Adafruit_ILI9341.h>
 #include "TouchScreen.h"
 #include "GuiLibrary.h"
+#if USING_SD
 #include <SdFat.h>
-
+#endif
 // These are the four touchscreen analog pins
 #define YP A0  // must be an analog pin, use "An" notation!
 #define XM A1  // must be an analog pin, use "An" notation!
@@ -42,7 +43,9 @@
 #define TFT_DC 5
 #define SD_CS 8
 
+#if USING_SD
 SdFat sd;
+#endif
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 
@@ -189,11 +192,13 @@ void setup(void) {
   delay(1000);
   Serial.println(F("Gui Widgets test!"));
 
+#if USING_SD
   // SD is a go
   if (!sd.begin(SD_CS, SPI_HALF_SPEED)) {
     Serial.println("Begin failed");
     return;
   }
+#endif
 
   // TFT is a go
   tft.begin();
