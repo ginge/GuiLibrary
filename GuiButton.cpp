@@ -71,12 +71,12 @@ uint8_t GuiButton::callbackProcess(processEvent_t processEventHandle, void* proc
 void GuiButton::draw(void) {
     if (!visible()) return;
     
-    int16_t newx = absoluteX() + padding;
-    int16_t newy = absoluteY() + padding;
+    int16_t newx = absoluteX();
+    int16_t newy = absoluteY();
     
      // erase or fill the bg
     if (pressed()) {
-        _tft->fillRect(newx - padding, newy - padding, width, height, ILI9341_WHITE);
+        _tft->fillRect(newx, newy, width, height, ILI9341_WHITE);
     }
     else {
         // when we press we take care of the background fill below
@@ -86,16 +86,16 @@ void GuiButton::draw(void) {
 #if USING_SD
     // all we are responsible for is drawing the image. the text is drawn by the base Label class
     if (imageFileName != NULL && !pressed()) {
-        newy += (height/2) - imageSize/2 - padding;
+        newy += (height/2) - imageSize/2;
                
         if (imageAlignH == TEXT_H_ALIGN_CENTRE) {
-            newx += (width/2) - imageSize/2 - padding;
+            newx += (width/2) - imageSize/2;
         }
         else if (imageAlignH == TEXT_H_ALIGN_RIGHT) {
-            newx += width - imageSize/2 - padding + margin;
+            newx += width - imageSize/2 + margin;
         }
         
-        GuiUtils::bmpDraw(imageFileName, newx, newy);
+        GuiUtils::bmpDraw(imageFileName, newx + padding, newy + padding);
     }
 #endif
     
