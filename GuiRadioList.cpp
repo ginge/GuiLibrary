@@ -15,7 +15,7 @@ A simple GUI Widget library for TFT screens.
 #include "GuiLibrary.h"
 
 //an external global reference to the tft.
-extern Adafruit_ILI9341* _tft;
+extern Adafruit_GFX* _tft;
 
 class GuiRadioButton : public GuiCheckBox {
 public:
@@ -37,14 +37,14 @@ public:
         
         GuiElement::drawBase();    
         
-        _tft->drawCircle(newx + (boxSize / 2), midy, boxSize/2, ILI9341_WHITE);
+        _tft->drawCircle(newx + (boxSize / 2), midy, boxSize/2, COLOR_WHITE);
         if (pressed())
             Serial.println("pressed");
         
         // erase or fill the bg
         if (pressed()) {
             // tick it
-            _tft->fillCircle(newx + (boxSize / 2), midy, (boxSize/2) - 3, ILI9341_WHITE);
+            _tft->fillCircle(newx + (boxSize / 2), midy, (boxSize/2) - 3, COLOR_WHITE);
         }
         extraXOffset = 3 + fontSize() * 7;
         

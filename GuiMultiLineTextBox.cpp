@@ -14,9 +14,6 @@ A simple GUI Widget library for TFT screens.
 
 #include "GuiLibrary.h"
 
-//an external global reference to the tft.
-extern Adafruit_ILI9341* _tft;
-
 void GuiMultiLineTextBox::addChild(GuiElement *child) {
     // remap the x and y of the child
     child->y = totalHeight + child->margin;

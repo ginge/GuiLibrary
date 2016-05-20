@@ -17,7 +17,7 @@ A simple GUI Widget library for TFT screens.
 #include <stdint.h>
 #include "LinkedList.h"
 #include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_ILI9341.h>
+#include <GuiConfig.h.template>
 #include "TouchScreen.h"
 
 // sometimes we want to disable this
@@ -28,10 +28,18 @@ A simple GUI Widget library for TFT screens.
 #endif
 
 // This is calibration data for the raw touch data to the screen coordinates
+#ifndef TS_MINX
 #define TS_MINX 150
+#endif
+#ifndef TS_MINY
 #define TS_MINY 120
+#endif
+#ifndef TS_MAXX
 #define TS_MAXX 920
+#endif
+#ifndef TS_MAXY
 #define TS_MAXY 940
+#endif
 
 #define MINPRESSURE 15
 #define MAXPRESSURE 1000
@@ -51,13 +59,30 @@ A simple GUI Widget library for TFT screens.
 #define TRANSPARENT 2
 #define PRESSED     3
 
-#define ILI9341_GREY 0x7BEF
-
+#define COLOR_BLACK       0x0000      /*   0,   0,   0 */
+#define COLOR_NAVY        0x000F      /*   0,   0, 128 */
+#define COLOR_DARKGREEN   0x03E0      /*   0, 128,   0 */
+#define COLOR_DARKCYAN    0x03EF      /*   0, 128, 128 */
+#define COLOR_MAROON      0x7800      /* 128,   0,   0 */
+#define COLOR_PURPLE      0x780F      /* 128,   0, 128 */
+#define COLOR_OLIVE       0x7BE0      /* 128, 128,   0 */
+#define COLOR_LIGHTGREY   0xC618      /* 192, 192, 192 */
+#define COLOR_DARKGREY    0x7BEF      /* 128, 128, 128 */
+#define COLOR_BLUE        0x001F      /*   0,   0, 255 */
+#define COLOR_GREEN       0x07E0      /*   0, 255,   0 */
+#define COLOR_CYAN        0x07FF      /*   0, 255, 255 */
+#define COLOR_RED         0xF800      /* 255,   0,   0 */
+#define COLOR_MAGENTA     0xF81F      /* 255,   0, 255 */
+#define COLOR_YELLOW      0xFFE0      /* 255, 255,   0 */
+#define COLOR_WHITE       0xFFFF      /* 255, 255, 255 */
+#define COLOR_ORANGE      0xFD20      /* 255, 165,   0 */
+#define COLOR_GREENYELLOW 0xAFE5      /* 173, 255,  47 */
+#define COLOR_PINK        0xF81F
 
 // default colours
-#define DEFAULT_COLOUR_BG ILI9341_GREY
-#define DEFAULT_COLOUR_FG ILI9341_BLACK
-#define DEFAULT_COLOUR_BORDER ILI9341_WHITE
+#define DEFAULT_COLOUR_BG COLOR_DARKGREY
+#define DEFAULT_COLOUR_FG COLOR_BLACK
+#define DEFAULT_COLOUR_BORDER COLOR_WHITE
 
 
 class GuiElement {
@@ -202,7 +227,7 @@ private:
 
 //////////////////
 
-extern Adafruit_ILI9341* _tft;
+extern Adafruit_GFX* _tft;
 extern uint8_t _TFT_CS;
 
 #if USING_SD
@@ -212,7 +237,7 @@ extern SdFat* _sd;
 class Gui : public GuiElement {
 public:
     Gui(void);
-    Gui(Adafruit_ILI9341* thetft, TouchScreen* thets, int16_t x, int16_t y, int16_t width, int16_t height) 
+    Gui(Adafruit_GFX* thetft, TouchScreen* thets, int16_t x, int16_t y, int16_t width, int16_t height)
         : GuiElement(x, y, width, height) { _tft = thetft; ts = thets; borderWidth = 0; margin = 0; backgroundColour = DEFAULT_COLOUR_BG; transparent(false); }; // usually the size of you tft. i.e. (0,0,320,240)
     void setRotation(int16_t degrees);
     
@@ -263,7 +288,7 @@ public:
 class GuiMultiLineTextBox : public GuiElementList {
 public:
     GuiMultiLineTextBox(void);
-    GuiMultiLineTextBox(int16_t x, int16_t y, int16_t width, int16_t height) : GuiElementList(x, y, width, height) { backgroundColour = ILI9341_WHITE; transparent(false); };
+    GuiMultiLineTextBox(int16_t x, int16_t y, int16_t width, int16_t height) : GuiElementList(x, y, width, height) { backgroundColour = COLOR_WHITE; transparent(false); };
     
     void addChild(GuiElement *child);
     void addLine(char const* text);

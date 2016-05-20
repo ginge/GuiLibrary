@@ -15,7 +15,7 @@ A simple GUI Widget library for TFT screens.
 #include "GuiLibrary.h"
 
 //an external global reference to the tft.
-extern Adafruit_ILI9341* _tft;
+extern Adafruit_GFX* _tft;
   
 // process the callback. This invokes the callback by calling the handle, 
 // and using the processEventPointer to send back the scope
@@ -79,7 +79,7 @@ void GuiButton::draw(void) {
     
      // erase or fill the bg
     if (pressed()) {
-        _tft->fillRect(newx, newy, width, height, ILI9341_WHITE);
+        _tft->fillRect(newx, newy, width, height, COLOR_WHITE);
     }
     else {
         // when we press we take care of the background fill below

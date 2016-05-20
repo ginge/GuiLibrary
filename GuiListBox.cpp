@@ -14,9 +14,6 @@ A simple GUI Widget library for TFT screens.
 
 #include "GuiLibrary.h"
 
-//an external global reference to the tft.
-extern Adafruit_ILI9341* _tft;
-
 void GuiListBox::addListElement(char const* text, uint16_t value) {
     GuiLabel *label = new GuiLabel(0, 0, width - padding, 30, text);
     label->value(value);

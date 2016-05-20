@@ -15,7 +15,7 @@ A simple GUI Widget library for TFT screens.
 #include "GuiLibrary.h"
 
 //an external global reference to the tft.
-extern Adafruit_ILI9341* _tft;
+extern Adafruit_GFX* _tft;
   
 // process the callback. This invokes the callback by calling the handle, 
 // and using the processEventPointer to send back the scope
@@ -23,7 +23,7 @@ uint8_t GuiCheckBox::callbackProcess(processEvent_t processEventHandle, void* pr
     if (!visible() || !enabled())
         return 0;
    
-    GuiElement* backupParent = parent;
+    //GuiElement* backupParent = parent;
     
     // the callback wants to go somewhere else, or otherwise doesn't want a redraw.
     // we are going to cheat here and tell this widget it has no parent, set the flags, and then restore the parent
@@ -73,13 +73,13 @@ void GuiCheckBox::draw(void) {
     
     GuiElement::drawBase();    
     
-    _tft->drawRect(newx, midy - midFontHeight, boxSize, boxSize, ILI9341_WHITE);
+    _tft->drawRect(newx, midy - midFontHeight, boxSize, boxSize, COLOR_WHITE);
     
     // erase or fill the bg
     if (pressed()) {
         // tick it
-        _tft->drawLine(newx, midy - midFontHeight, newx + boxSize - 1, midy + (boxSize /2) - 1, ILI9341_WHITE);
-        _tft->drawLine(newx + boxSize - 1, midy - midFontHeight, newx, midy + (boxSize /2) - 1, ILI9341_WHITE);
+        _tft->drawLine(newx, midy - midFontHeight, newx + boxSize - 1, midy + (boxSize /2) - 1, COLOR_WHITE);
+        _tft->drawLine(newx + boxSize - 1, midy - midFontHeight, newx, midy + (boxSize /2) - 1, COLOR_WHITE);
     }
     extraXOffset = 5 + fontSize() * 7;
     
