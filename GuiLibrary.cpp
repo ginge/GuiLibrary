@@ -26,7 +26,7 @@ A simple GUI Widget library for TFT screens.
 #include "GuiLibrary.h"
 
 //an external global reference to the tft.
-extern Adafruit_ILI9341* _tft;
+extern Adafruit_GFX* _tft;
 
 GuiElement::GuiElement(void) {
 }
@@ -126,7 +126,7 @@ void GuiElement::drawBase(void) {
     bool isEnabled = (settingsFlags >> ENABLED) & 1;
     
     if (!transparent() || !isEnabled) {
-        _tft->fillRect(absoluteX(), absoluteY(), width, height, (isEnabled ? backgroundColour : ILI9341_LIGHTGREY));
+        _tft->fillRect(absoluteX(), absoluteY(), width, height, (isEnabled ? backgroundColour : COLOR_LIGHTGREY));
     }
     else if (transparent()) {
         // it won't get drawn if there is no background on it, so we swipe it from the parent
@@ -143,7 +143,7 @@ void GuiElement::drawBase(void) {
         int16_t colour = borderColour;
         
         if (!enabled()) {
-            colour = ILI9341_DARKGREY;
+            colour = COLOR_DARKGREY;
         }        
         _tft->drawRect(absoluteX(), absoluteY(), width, height, colour);
     }

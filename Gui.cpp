@@ -24,7 +24,7 @@ A simple GUI Widget library for TFT screens.
 #include <string.h>
 #include "GuiLibrary.h"
 
-Adafruit_ILI9341* _tft;
+Adafruit_GFX* _tft;
 
 #if USING_SD
 SdFat* _sd;
@@ -33,7 +33,7 @@ uint8_t _TFT_CS = 10;
 
 Gui::Gui(void) {
 
-};
+}
 
 void Gui::draw(void) {
     drawBase();

@@ -46,7 +46,7 @@ void GuiUtils::drawText(GuiElement* element, char const* text, uint16_t colour, 
     if (element->enabled())
         _tft->setTextColor(colour);
     else
-        _tft->setTextColor(ILI9341_DARKGREY);
+        _tft->setTextColor(COLOR_DARKGREY);
     
     _tft->setCursor(x, y);
     _tft->setTextSize(fontSize);

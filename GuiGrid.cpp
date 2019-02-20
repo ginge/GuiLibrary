@@ -14,9 +14,6 @@ A simple GUI Widget library for TFT screens.
 
 #include "GuiLibrary.h"
 
-//an external global reference to the tft.
-extern Adafruit_ILI9341* _tft;
-
 GuiGrid::GuiGrid(int16_t x, int16_t y, int16_t width, int16_t height, uint8_t columns, uint8_t rows) 
     : GuiElement(x, y, width, height) { 
     columnCount = columns;       

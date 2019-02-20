@@ -1,0 +1,20 @@
+/*
+ * GuiConfig.h
+ *
+ *  Created on: 19. 5. 2016
+ *      Author: jindra
+ */
+
+#ifndef GUICONFIG_H_
+#define GUICONFIG_H_
+
+
+// This is calibration data for the raw touch data to the screen coordinates
+#define TS_MINX 340
+#define TS_MAXX 583
+#define TS_MINY 283
+#define TS_MAXY 966
+
+
+
+#endif /* GUICONFIG_H_ */
